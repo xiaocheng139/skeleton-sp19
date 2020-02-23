@@ -21,8 +21,10 @@ public class NBody {
         /* Draw the background */
         StdDraw.picture(-radius, radius, image_path);
 
-
-
+        for (Body body: bodyArray)
+        {
+            body.draw();
+        }
     }
 
     // Get a double corresponding to the radius of the universe in that file
