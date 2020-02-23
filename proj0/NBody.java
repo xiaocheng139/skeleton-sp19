@@ -2,12 +2,27 @@ import java.util.Scanner;
 
 public class NBody {
     public static void main(String[] args) {
+        // Read the variables in
         Scanner scanner = new Scanner(System.in);
         double T = scanner.nextDouble();
         double dt = scanner.nextDouble();
         String filename = scanner.next();
         double radius = readRadius(filename);
         Body[] bodyArray = readBodies(filename);
+        String image_path = "images/starfield.jpg";
+
+        // Drawing the background
+        /* Set the scale */
+        StdDraw.setScale(-radius, radius);
+
+        /* Clears the drawing window. */
+        StdDraw.clear();
+
+        /* Draw the background */
+        StdDraw.picture(-radius, radius, image_path);
+
+
+
     }
 
     // Get a double corresponding to the radius of the universe in that file
