@@ -3,13 +3,15 @@ import java.util.Scanner;
 public class NBody {
     public static void main(String[] args) {
         // Read the variables in
-        Scanner scanner = new Scanner(System.in);
-        double T = scanner.nextDouble();
-        double dt = scanner.nextDouble();
-        String filename = scanner.next();
+        double T = Double.parseDouble(args[0]);
+        double dt = Double.parseDouble(args[1]);
+        String filename = args[2];
         double radius = readRadius(filename);
         Body[] bodyArray = readBodies(filename);
         String image_path = "images/starfield.jpg";
+
+        /* Enable double buffering */
+        StdDraw.enableDoubleBuffering();
 
         // Drawing the background
         /* Set the scale */
@@ -25,9 +27,6 @@ public class NBody {
         {
             body.draw();
         }
-
-        /* Enable double buffering */
-        StdDraw.enableDoubleBuffering();
 
         /* Create animation*/
         for(double timer = 0; timer <= T; timer += dt)
