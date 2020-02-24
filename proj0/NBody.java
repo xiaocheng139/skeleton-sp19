@@ -55,10 +55,14 @@ public class NBody {
         }
 
         /* Print out the final state of universe */
-        System.out.println(bodyArray.length);
-        System.out.println(radius);
-
-
+        StdOut.printf("%d\n", bodyArray.length);
+        StdOut.printf("%.2e\n", radius);
+        for(Body body: bodyArray)
+        {
+            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+                    body.xxPos, body.yyPos, body.xxVel,
+                    body.yyVel, body.mass, body.imgFileName);
+        }
     }
 
     // Get a double corresponding to the radius of the universe in that file
