@@ -25,6 +25,41 @@ public class NBody {
         {
             body.draw();
         }
+
+        /* Enable double buffering */
+        StdDraw.enableDoubleBuffering();
+
+        /* Create animation*/
+        for(double timer = 0; timer <= T; timer += dt)
+        {
+            double[] xForces = new double[bodyArray.length];
+            double[] yForces = new double[bodyArray.length];
+
+            for(int bodyIndex = 0; bodyIndex < bodyArray.length; bodyIndex++)
+            {
+             double netForceByX = bodyArray[bodyIndex].calcNetForceExertedByX(bodyArray);
+             double netForceByY = bodyArray[bodyIndex].calcNetForceExertedByY(bodyArray);
+
+             xForces[bodyIndex] = netForceByX;
+             yForces[bodyIndex] = netForceByY;
+             bodyArray[bodyIndex].update(dt, netForceByX, netForceByY);
+            }
+
+            StdDraw.picture(-radius, radius, image_path);
+            for (Body body: bodyArray)
+            {
+                body.draw();
+            }
+
+            StdDraw.show();
+            StdDraw.pause(2000);
+        }
+
+        /* Print out the final state of universe */
+        System.out.println(bodyArray.length);
+        System.out.println(radius);
+
+
     }
 
     // Get a double corresponding to the radius of the universe in that file
