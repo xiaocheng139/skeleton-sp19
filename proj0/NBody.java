@@ -15,18 +15,13 @@ public class NBody {
 
         // Drawing the background
         /* Set the scale */
-        StdDraw.setScale(-radius, radius);
+        StdDraw.setScale(-2 * radius, 2 * radius);
 
         /* Clears the drawing window. */
         StdDraw.clear();
 
         /* Draw the background */
-        StdDraw.picture(-radius, radius, image_path);
-
-        for (Body body: bodyArray)
-        {
-            body.draw();
-        }
+        StdDraw.picture(0, 0, image_path);
 
         /* Create animation*/
         for(double timer = 0; timer <= T; timer += dt)
