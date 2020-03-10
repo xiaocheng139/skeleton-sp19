@@ -35,7 +35,18 @@ public class LinkedListDeque <T> {
     /* Create a deep copy of other */
     public LinkedListDeque(LinkedListDeque other)
     {
+        sentinel = new IntNode(null, null, null);
+        sentinel.pre = sentinel;
+        sentinel.next = sentinel;
+        size = 0;
 
+        if (!other.isEmpty())
+        {
+            for (int i = 0; i < other.size(); i++)
+            {
+                addLast(other.get(i));
+            }
+        }
     }
 
     /* Adds an item of type T to the front of the deque */
@@ -118,16 +129,38 @@ public class LinkedListDeque <T> {
     /* Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null */
     public T get(int index)
     {
+        int currentIndex = 0;
+        IntNode currentNode = sentinel.next;
+
         if ((sentinel.next == sentinel && sentinel.pre == sentinel) || size < index + 1)
         {
             return null;
         }
-
+        while (currentIndex < index)
+        {
+            currentNode = currentNode.next;
+            currentIndex ++;
+        }
+        return currentNode.val;
     }
 
     /* Get item using recursive method */
     public T getRecursive(int index)
     {
+        if ((sentinel.next == sentinel && sentinel.pre == sentinel) || size < index + 1)
+        {
+            return null;
+        }
+        return getRecursiveHelper(sentinel.next, 0, index);
 
+    }
+
+    private T getRecursiveHelper(IntNode currentNode, int currentIndex, int index)
+    {
+        if (currentIndex == index)
+        {
+            return currentNode.val;
+        }
+        return getRecursiveHelper(currentNode.next, currentIndex + 1, index);
     }
 }
