@@ -20,4 +20,9 @@ public class ArrayDeque <T> {
         items[0] = item;
         size ++;
     }
+
+    public int minusOne(int index)
+    {
+        return index - 1;
+    }
 }
