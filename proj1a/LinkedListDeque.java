@@ -44,7 +44,7 @@ public class LinkedListDeque <T> {
         {
             for (int i = 0; i < other.size(); i++)
             {
-                addLast(other.get(i));
+                addLast((T) other.get(i));
             }
         }
     }
