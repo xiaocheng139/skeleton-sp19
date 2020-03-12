@@ -82,4 +82,10 @@ public class ArrayDeque <T> {
     {
         return (float) size / items.length;
     }
+
+    public int calculateRFactor()
+    {
+        double usageRate = getUsageRate();
+
+    }
 }
