@@ -169,7 +169,7 @@ public class ArrayDeque <T> {
     {
         int i = plusOne(nextFirst);
 
-        if (items.length == size)
+        if (items.length == size) // Not look good, need to be improved
         {
             System.out.print(items[i]);
             System.out.print(" ");
