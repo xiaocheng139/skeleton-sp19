@@ -11,8 +11,8 @@ public class ArrayDeque <T> {
     {
         items = (T[]) new Object[MINIMUMLENGTH];
         size = 0;
-        nextFirst = 0;
-        nextLast = MINIMUMLENGTH - 1;
+        nextFirst = MINIMUMLENGTH - 1;
+        nextLast = 0;
     }
 
     public ArrayDeque(ArrayDeque other)
@@ -26,9 +26,10 @@ public class ArrayDeque <T> {
         int index = plusOne(nextFirst);
 
         /* Do the copy */
-        while (plusOne(index) != minusOne(nextLast))
+        while (index != nextLast)
         {
             items[index] = (T) other.get(index);
+            index = plusOne(index);
         }
     }
 
@@ -39,6 +40,7 @@ public class ArrayDeque <T> {
         {
             T[] result = (T[]) new Object[items.length * 2];
             System.arraycopy(items, 0, result, 0, size);
+            items = result;
         }
         /* Shrink the array, set the length to (capacity / RFACTOR) */
         else if (items.length >= 16 && size < items.length * RFACTOR)
@@ -50,6 +52,7 @@ public class ArrayDeque <T> {
             }
             T[] result = (T[]) new Object[newLength];
             System.arraycopy(items, 0, result, 0, size);
+            items = result;
         }
     }
 
@@ -76,8 +79,15 @@ public class ArrayDeque <T> {
     {
         size--;
         resize();
-        int preFirst = plusOne(nextFirst);
-        return items[preFirst];
+        int firstIndex = plusOne(nextFirst);
+        nextFirst = plusOne(nextFirst);
+
+        // Save the deleted item and return
+        T item = items[firstIndex];
+
+        // Remove the item from array
+        items[firstIndex] = null;
+        return item;
     }
 
     /* Removes and returns the item at the back of the deque. If no such item exists, returns null. */
@@ -85,8 +95,15 @@ public class ArrayDeque <T> {
     {
         size--;
         resize();
-        int preLast= minusOne(nextLast);
-        return items[preLast];
+        int lastIndex= minusOne(nextLast);
+        nextLast = minusOne(nextLast);
+
+        // Save the deleted item and return
+        T item = items[lastIndex];
+
+        // Remove the item from array
+        items[lastIndex] = null;
+        return item;
     }
 
     /* compute the index immediately “before” a given index */
@@ -147,7 +164,34 @@ public class ArrayDeque <T> {
         return items[index];
     }
 
-    public static void main(String[] args) {
+    /* Prints the items in the deque from first to last */
+    public void printDeque()
+    {
+        int i = plusOne(nextFirst);
 
+        if (items.length == size)
+        {
+            System.out.print(items[i]);
+            System.out.print(" ");
+            i = plusOne(i);
+        }
+
+        while (i != nextLast)
+        {
+            System.out.print(items[i]);
+            System.out.print(" ");
+            i = plusOne(i);
+        }
+    }
+
+    public static void main(String[] args) {
+        ArrayDeque<Integer> dequeue = new ArrayDeque<>();
+        dequeue.addFirst(1);
+        dequeue.addLast(2);
+        System.out.println(dequeue.removeLast());
+        System.out.println(dequeue.removeLast());
+        dequeue.addFirst(1);
+        dequeue.addLast(2);
+        dequeue.printDeque();
     }
 }
