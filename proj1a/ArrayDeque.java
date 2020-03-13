@@ -18,7 +18,18 @@ public class ArrayDeque <T> {
     public ArrayDeque(ArrayDeque other)
     {
         size = other.size();
+        items = (T[]) new Object[size];
 
+        /* Determine range */
+        nextFirst = other.getNextFirst();
+        nextLast = other.getNextLast();
+        int index = plusOne(nextFirst);
+
+        /* Do the copy */
+        while (plusOne(index) != minusOne(nextLast))
+        {
+            items[index] = (T) other.get(index);
+        }
     }
 
     public void resize()
@@ -114,5 +125,29 @@ public class ArrayDeque <T> {
     public int size()
     {
         return size;
+    }
+
+    public int getNextLast()
+    {
+        return nextLast;
+    }
+
+    public int getNextFirst()
+    {
+        return nextFirst;
+    }
+
+    /* Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null */
+    public T get(int index)
+    {
+        if (index > size - 1)
+        {
+            return null;
+        }
+        return items[index];
+    }
+
+    public static void main(String[] args) {
+
     }
 }
