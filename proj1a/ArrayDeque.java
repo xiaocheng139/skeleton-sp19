@@ -36,8 +36,10 @@ public class ArrayDeque <T> {
     public void resize()
     {
         /* Extent the array doubly */
-        if (size > items.length)
+        if (size + 1 > items.length)
         {
+            int a = 123;
+            nextLast += items.length;
             T[] result = (T[]) new Object[items.length * 2];
             System.arraycopy(items, 0, result, 0, size);
             items = result;
@@ -50,6 +52,8 @@ public class ArrayDeque <T> {
             {
                 newLength = MINIMUMLENGTH;
             }
+            nextFirst %= newLength;
+            nextLast %= newLength;
             T[] result = (T[]) new Object[newLength];
             System.arraycopy(items, 0, result, 0, size);
             items = result;
@@ -59,18 +63,18 @@ public class ArrayDeque <T> {
     /* Adds an item of type T to the front of the deque */
     public void addFirst(T item)
     {
-        size ++;
         resize();
         items[nextFirst] = item;
+        size ++;
         nextFirst = minusOne(nextFirst);
     }
 
     /* Adds an item of type T to the end of the deque */
     public void addLast(T item)
     {
-        size ++;
         resize();
         items[nextLast] = item;
+        size ++;
         nextLast = plusOne(nextLast);
     }
 
@@ -169,7 +173,7 @@ public class ArrayDeque <T> {
     {
         int i = plusOne(nextFirst);
 
-        if (items.length == size) // Not look good, need to be improved
+        if (items.length == size)
         {
             System.out.print(items[i]);
             System.out.print(" ");
@@ -188,10 +192,21 @@ public class ArrayDeque <T> {
         ArrayDeque<Integer> dequeue = new ArrayDeque<>();
         dequeue.addFirst(1);
         dequeue.addLast(2);
-        System.out.println(dequeue.removeLast());
-        System.out.println(dequeue.removeLast());
-        dequeue.addFirst(1);
-        dequeue.addLast(2);
+        dequeue.addFirst(3);
+        dequeue.addLast(4);
+        dequeue.addFirst(5);
+        dequeue.addLast(6);
+        dequeue.addFirst(7);
+        dequeue.addLast(8);
+        dequeue.addFirst(9);
+        dequeue.addLast(10);
+        dequeue.addFirst(11);
+        dequeue.addLast(12);
+        dequeue.addFirst(13);
+        dequeue.addLast(14);
+        dequeue.addFirst(15);
+        dequeue.addLast(16);
         dequeue.printDeque();
     }
 }
+
