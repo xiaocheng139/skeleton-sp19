@@ -33,29 +33,52 @@ public class ArrayDeque <T> {
         }
     }
 
-    public void resize()
+    public void resize(int capacity)
     {
         /* Extent the array doubly */
-        if (size + 1 > items.length)
+        if (capacity > items.length)
         {
-            int a = 123;
-            nextLast += items.length;
             T[] result = (T[]) new Object[items.length * 2];
-            System.arraycopy(items, 0, result, 0, size);
+
+            int start = plusOne(nextFirst);
+            int end = minusOne(nextLast);
+            if (start < end)
+            {
+                System.arraycopy(items, start, result, 0, size);
+            }
+            else
+            {
+                System.arraycopy(items, start, result, 0, size - start);
+                System.arraycopy(items, 0, result, size - start, start);
+            }
+
+            nextFirst = items.length * 2 - 1;
+            nextLast = size;
             items = result;
         }
         /* Shrink the array, set the length to (capacity / RFACTOR) */
-        else if (items.length >= 16 && size < items.length * RFACTOR)
+        else if (items.length >= 16 && capacity < items.length * RFACTOR)
         {
-            int newLength = (int) (size / RFACTOR);
+            int newLength = (int) (capacity / RFACTOR);
             if (newLength < MINIMUMLENGTH)
             {
                 newLength = MINIMUMLENGTH;
             }
-            nextFirst %= newLength;
-            nextLast %= newLength;
             T[] result = (T[]) new Object[newLength];
-            System.arraycopy(items, 0, result, 0, size);
+
+            int start = plusOne(nextFirst);
+            int end = minusOne(nextLast);
+            if (end >= newLength)
+            {
+                System.arraycopy(items, start, result, 0, size);
+            }
+            else if (start >= newLength && end < newLength)
+            {
+                System.arraycopy(items, start, result, 0, size - start);
+                System.arraycopy(items, 0, result, size - start, start);
+            }
+            nextFirst = newLength - 1;
+            nextLast = size;
             items = result;
         }
     }
@@ -63,26 +86,29 @@ public class ArrayDeque <T> {
     /* Adds an item of type T to the front of the deque */
     public void addFirst(T item)
     {
-        resize();
+        int newSize = size + 1;
+        resize(newSize);
+        size = newSize;
         items[nextFirst] = item;
-        size ++;
         nextFirst = minusOne(nextFirst);
     }
 
     /* Adds an item of type T to the end of the deque */
     public void addLast(T item)
     {
-        resize();
+        int newSize = size + 1;
+        resize(newSize);
+        size = newSize;
         items[nextLast] = item;
-        size ++;
         nextLast = plusOne(nextLast);
     }
 
     /* Removes and returns the item at the front of the deque. If no such item exists, returns null. */
     public T removeFirst()
     {
-        size--;
-        resize();
+        int newSize = size - 1;
+        resize(newSize);
+        size = newSize;
         int firstIndex = plusOne(nextFirst);
         nextFirst = plusOne(nextFirst);
 
@@ -97,8 +123,9 @@ public class ArrayDeque <T> {
     /* Removes and returns the item at the back of the deque. If no such item exists, returns null. */
     public T removeLast()
     {
-        size--;
-        resize();
+        int newSize = size - 1;
+        resize(newSize);
+        size = newSize;
         int lastIndex= minusOne(nextLast);
         nextLast = minusOne(nextLast);
 
@@ -191,7 +218,7 @@ public class ArrayDeque <T> {
     public static void main(String[] args) {
         ArrayDeque<Integer> dequeue = new ArrayDeque<>();
         dequeue.addFirst(1);
-        dequeue.addLast(2);
+        dequeue.addFirst(2);
         dequeue.addFirst(3);
         dequeue.addLast(4);
         dequeue.addFirst(5);
@@ -206,6 +233,35 @@ public class ArrayDeque <T> {
         dequeue.addLast(14);
         dequeue.addFirst(15);
         dequeue.addLast(16);
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.removeLast();
+        dequeue.addLast(1);
+        dequeue.addLast(2);
+        dequeue.addLast(3);
+        dequeue.addLast(4);
+        dequeue.addLast(5);
+        dequeue.addLast(6);
+        dequeue.addLast(7);
+        dequeue.addLast(8);
+        dequeue.addLast(9);
+        dequeue.addLast(10);
+        dequeue.addLast(11);
+        dequeue.addLast(12);
+        dequeue.addLast(13);
         dequeue.printDeque();
     }
 }
