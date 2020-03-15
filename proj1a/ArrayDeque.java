@@ -17,8 +17,9 @@ public class ArrayDeque <T> {
 
     public ArrayDeque(ArrayDeque other)
     {
+        int capacity = other.capacity();
         size = other.size();
-        items = (T[]) new Object[size];
+        items = (T[]) new Object[capacity];
 
         /* Determine range */
         nextFirst = other.getNextFirst();
@@ -176,6 +177,12 @@ public class ArrayDeque <T> {
     public int size()
     {
         return size;
+    }
+
+    /* Return the maximum number of items can be stored */
+    public int capacity()
+    {
+        return items.length;
     }
 
     public int getNextLast()
