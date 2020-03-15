@@ -23,14 +23,17 @@ public class ArrayDeque <T> {
         /* Determine range */
         nextFirst = other.getNextFirst();
         nextLast = other.getNextLast();
-        int index = plusOne(nextFirst);
+        int start = plusOne(nextFirst);
+        int end = minusOne(nextLast);
+        int index = start;
 
         /* Do the copy */
-        while (index != nextLast)
+        while (index != end)
         {
             items[index] = (T) other.get(index);
             index = plusOne(index);
         }
+        items[index] = (T) other.get(index);
     }
 
     public void resize(int capacity)
@@ -198,26 +201,21 @@ public class ArrayDeque <T> {
     /* Prints the items in the deque from first to last */
     public void printDeque()
     {
-        int i = plusOne(nextFirst);
+        int start = plusOne(nextFirst);
+        int end = minusOne(nextLast);
 
-        if (items.length == size)
+        for (int i = start; i != end; i = plusOne(i))
         {
             System.out.print(items[i]);
             System.out.print(" ");
-            i = plusOne(i);
         }
 
-        while (i != nextLast)
-        {
-            System.out.print(items[i]);
-            System.out.print(" ");
-            i = plusOne(i);
-        }
+        System.out.print(items[end]);
     }
 
     public static void main(String[] args) {
         ArrayDeque<Integer> dequeue = new ArrayDeque<>();
-        dequeue.addFirst(1);
+        dequeue.addLast(1);
         dequeue.addFirst(2);
         dequeue.addFirst(3);
         dequeue.addLast(4);
@@ -262,7 +260,7 @@ public class ArrayDeque <T> {
         dequeue.addLast(11);
         dequeue.addLast(12);
         dequeue.addLast(13);
-        dequeue.printDeque();
+        ArrayDeque<Integer> dequeue2 = new ArrayDeque<>(dequeue);
+        dequeue2.printDeque();
     }
 }
-
