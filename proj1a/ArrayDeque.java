@@ -198,7 +198,8 @@ public class ArrayDeque <T> {
     /* Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null */
     public T get(int index)
     {
-        if (index > size - 1)
+
+        if (index > items.length - 1)
         {
             return null;
         }
@@ -266,7 +267,7 @@ public class ArrayDeque <T> {
         dequeue.addLast(10);
         dequeue.addLast(11);
         dequeue.addLast(12);
-        dequeue.addLast(13);
+        dequeue.addFirst(13);
         ArrayDeque<Integer> dequeue2 = new ArrayDeque<>(dequeue);
         dequeue2.printDeque();
     }
